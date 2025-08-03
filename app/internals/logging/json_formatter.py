@@ -63,4 +63,4 @@ class JSONFormatter(Formatter):
         if self.pretty:
             json_args = {"sort_keys": True, "indent": 4}
 
-        return json.dumps(log_dict, **json_args)
+        return json.dumps(log_dict, **json_args)  # type: ignore[arg-type]
