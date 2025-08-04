@@ -24,6 +24,21 @@ class SQLiteRepo(ShortUrlRepo):
                 return ShortUrl(short_url_id=short_url_id, long_url=row["long_url"])
             return None
 
+    def get_all(self) -> list[ShortUrl]:
+        with sqlite3.connect("mappings.db") as con:
+            con.row_factory = sqlite3.Row
+            result = con.execute("SELECT short_url_id, long_url from mappings")
+            rows = result.fetchall()
+            mappings = []
+            if rows is not None:
+                for row in rows:
+                    mappings.append(
+                        ShortUrl(
+                            short_url_id=row["short_url_id"], long_url=row["long_url"]
+                        )
+                    )
+            return mappings
+
     def set(self, short_url: ShortUrl) -> bool:
         try:
             with sqlite3.connect("mappings.db") as con:

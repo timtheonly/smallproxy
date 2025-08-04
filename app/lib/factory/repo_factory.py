@@ -1,4 +1,5 @@
 from typing import Type
+from app.internals.exceptions import UnkonwnRepoType
 from app.lib.data_access.json_repo import JsonRepo
 from app.lib.data_access.sqllite_repo import SQLiteRepo
 from app.lib.data_access.short_url_repo import ShortUrlRepo
@@ -12,4 +13,6 @@ class RepoFactory:
 
     @staticmethod
     def get_repo(repo_name) -> ShortUrlRepo:
-        return RepoFactory.repo_mapping[repo_name]()
+        if RepoFactory.repo_mapping.get(repo_name):
+            return RepoFactory.repo_mapping[repo_name]()
+        raise UnkonwnRepoType(repo_name)

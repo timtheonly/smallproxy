@@ -17,6 +17,11 @@ async def get_short_url(
     return repo.get(short_url_id)
 
 
+@api_router.get("/short_url")
+async def get_all(repo: ShortUrlRepo = Depends(get_repo)) -> list[ShortUrl]:
+    return repo.get_all()
+
+
 @api_router.post("/short_url/")
 async def create_short_url(
     short_url: ShortUrl, repo: ShortUrlRepo = Depends(get_repo)

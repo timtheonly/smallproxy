@@ -8,6 +8,10 @@ class ShortUrlRepo(ABC):
         pass
 
     @abstractmethod
+    def get_all(self) -> list[ShortUrl]:
+        pass
+
+    @abstractmethod
     def set(self, short_url: ShortUrl) -> bool:
         pass
 
