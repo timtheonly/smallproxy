@@ -26,10 +26,7 @@ class JsonRepo(ShortUrlRepo):
         mappings = self._read_from_file()
         result = []
         for mapping in mappings.items():
-            result.append(
-                ShortUrl(short_url_id=mapping[0], long_url=mapping[1])
-                # ShortUrl(*mapping)
-            )
+            result.append(ShortUrl(short_url_id=mapping[0], long_url=mapping[1]))
         return result
 
     def set(self, short_url: ShortUrl) -> bool:
