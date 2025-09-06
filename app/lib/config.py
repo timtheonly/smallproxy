@@ -51,7 +51,7 @@ class Config(Borg):
     def get(self, config_name: str) -> Optional[Any]:
         return self.values.get(config_name)
 
-    def get_with_default(self, config_name: str, default: T) -> T | Any:
+    def get_with_default(self, config_name: str, default: T) -> T | Optional[Any]:
         if self.values:
-            return self.values.get(config_name)
+            return self.values.get(config_name, default)
         return default

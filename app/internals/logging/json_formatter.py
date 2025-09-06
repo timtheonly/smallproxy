@@ -1,4 +1,5 @@
 import json
+import pytz
 from logging import Formatter, LogRecord, ERROR
 from app.internals.context import ctx_correlation_id
 from datetime import datetime
@@ -41,7 +42,7 @@ class JSONFormatter(Formatter):
             "message": record.msg,
             "level": record.levelname,
             "correlation_id": correlation_id,
-            "timestamp": str(datetime.utcnow()),
+            "timestamp": str(datetime.now(pytz.UTC)),
         }
 
         if record.levelname == ERROR and record.exc_info:

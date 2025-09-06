@@ -1,14 +1,6 @@
 import json
 import uuid
-from app.main import app
 from app.internals.logging.json_formatter import JSONFormatter
-from fastapi.testclient import TestClient
-from pytest import fixture
-
-
-@fixture
-def test_client():
-    return TestClient(app)
 
 
 class TestCorrelationId:

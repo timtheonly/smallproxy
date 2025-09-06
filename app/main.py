@@ -1,8 +1,11 @@
 from fastapi import FastAPI
+from app.lib.config import Config
 from app.internals.bootstrap import bootstrap_routers, setup_logging
 from app.internals.middleware.correlation_id import CorrelationId
 from app.internals.middleware.request_logger import RequestLogger
 from app.internals.middleware.exception import ExceptionMiddleware
+
+config = Config()
 
 app = FastAPI()
 app = bootstrap_routers(app)
@@ -17,9 +20,11 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.get("/e")
-async def err():
-    raise TypeError
+if config.get("env") == "DEV":
+
+    @app.get("/e")
+    async def err():
+        raise Exception
 
 
 if __name__ == "__main__":
