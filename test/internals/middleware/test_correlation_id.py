@@ -10,6 +10,7 @@ class TestCorrelationId:
 
         response = test_client.get("/")
         assert response.status_code == 200
+        assert response.headers.get('x-correlation-id') is not None
         assert len(caplog.messages) == 1
 
         json_log = json.loads(
@@ -17,6 +18,7 @@ class TestCorrelationId:
         )  # using .text only works if there is only 1 log entry
 
         correlation_id = json_log.get("correlation_id")
+        assert correlation_id == response.headers.get('x-correlation-id')
         try:
             uuid.UUID(correlation_id, version=4)
         except Exception:
@@ -30,6 +32,7 @@ class TestCorrelationId:
             "/", headers={"X-Correlation-Id": passed_correlation_id}
         )
         assert response.status_code == 200
+        assert response.headers.get('x-correlation-id') == passed_correlation_id
         assert len(caplog.messages) == 1
 
         json_log = json.loads(
