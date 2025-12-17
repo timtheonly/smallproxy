@@ -4,12 +4,14 @@ from app.internals.exceptions import UnkonwnRepoType
 from app.lib.data_access.json_repo import JsonRepo
 from app.lib.data_access.sqllite_repo import SQLiteRepo
 from app.lib.data_access.short_url_repo import ShortUrlRepo
+from app.lib.data_access.yaml_repo import YamlRepo
 
 
 class RepoFactory:
     repo_mapping: dict[str, Type[ShortUrlRepo]] = {
         "json": JsonRepo,
         "sqlite": SQLiteRepo,
+        "yaml": YamlRepo,
     }
 
     @staticmethod
